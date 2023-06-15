@@ -54,3 +54,23 @@
     cursor: pointer;
 }
 
+.filter{
+    display:flex;
+}
+
+.shimmer-container {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.shimmer-card{
+    margin: 20px;
+    width: 230px;
+    height: 460px;
+    background-color: #f0f0f0;
+}
+
+.login{
+    margin:15px;
+    cursor:pointer;
+}
