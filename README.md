@@ -1,6 +1,6 @@
 # Namaste React 
 
-# https://github.com/YoganandaNY/namaste-react
+- https://github.com/YoganandaNY/namaste-react
 
 
 # Parcel
@@ -51,10 +51,36 @@
     - Export const Component <ComponentName/VariableName>;
     - Import { Component } from "Path";  
 
-# We Can Use only one Default Export in Component
+-   We Can Use only one Default Export in Component
 
 # React Hooks
 
 - (Normal Javascript Utility Functions)<Two Most Imp Hooks>
     - useState() - Superpowerful State Variable in React
     - useEffect()
+
+- There are 3 rules for useSate hooks:
+    - Hooks can only be called inside React function components.
+    - Hooks can only be called at the top level of a component.
+    - Hooks cannot be conditional (if, for loop)
+        - if(){ const [btnName] = useState(""); }
+
+- useEffect Hook 
+    - If no dependency array => useEffect is called on every render.
+           <!-- - useEffect(() => {
+                console.log("useEffect Called");
+            }); -->
+    - If dependency arryy is empty = [] => useEffect is called only on initial render(just once).
+            <!-- useEffect(() => {
+                console.log("useEffect Called");
+            }, []); -->
+    - If depenedcy array is [btnReactName] => useEffect is called everytime btnReactName is updated.
+           <!-- -  useEffect(() => {
+                console.log("useEffect Called");
+            }, [btnReactName]);         -->
+
+# 2 Types of Routing in web apps   
+    - Client Side Routing
+    - Server Side Routing
+
+            
