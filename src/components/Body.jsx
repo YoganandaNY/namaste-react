@@ -3,7 +3,7 @@ import resList from "../utils/mockData";
 import { useState, useEffect } from "react";
 import Shimmer from "./Shimmer";
 import { Link } from "react-router-dom";
-import { LIST_API  } from "../utils/constant";
+import { LIST_API } from "../utils/constant";
 
 // let listOfRestaurents = [
 //     {
@@ -42,80 +42,97 @@ import { LIST_API  } from "../utils/constant";
 // ];
 
 const Body = () => {
-    // Local State Variable - Super powerful variable
-    //const [listOfRestaurents, setlistOfRestaurents] = useState(resList);
+  // Local State Variable - Super powerful variable
+  //const [listOfRestaurents, setlistOfRestaurents] = useState(resList);
 
-    const [listOfRestaurents, setlistOfRestaurents] = useState([]);
+  const [listOfRestaurents, setlistOfRestaurents] = useState([]);
 
-    const [filteredRestuarant, setFilteredRestuarant] = useState([]);
+  const [filteredRestuarant, setFilteredRestuarant] = useState([]);
 
-    const [searchText, setSearchText] = useState("");
+  const [searchText, setSearchText] = useState("");
 
-    console.log("Body Rendered");
-    
-    // const arr = useState(resList);
-    // const [listOfRestaurents, setlistOfRestaurents] = arr;
-    // const listOfRestaurents = arr[0];
-    // const setlistOfRestaurents = arr[1];
+  //console.log("Body Rendered");
 
-    useEffect(() => {
-        fetchData();
-    }, []);
+  // const arr = useState(resList);
+  // const [listOfRestaurents, setlistOfRestaurents] = arr;
+  // const listOfRestaurents = arr[0];
+  // const setlistOfRestaurents = arr[1];
 
-    const fetchData = async () => {
+  useEffect(() => {
+    fetchData();
+  }, []);
 
-        const data = await fetch(LIST_API);
+  const fetchData = async () => {
+    const data = await fetch(LIST_API);
 
-        const json = await data.json();
-        
-        console.log(json);
-        //Optional Chaining
-        setlistOfRestaurents(json?.data?.cards[2]?.data?.data?.cards);
+    const json = await data.json();
 
-        setFilteredRestuarant(json?.data?.cards[2]?.data?.data?.cards);
-    };
+    console.log(json);
+    //Optional Chaining
+    setlistOfRestaurents(json?.data?.cards[2]?.data?.data?.cards);
 
-    // Conditional Rendering
-    // if(listOfRestaurents.length === 0) {
-    //     return <Shimmer />;
-    // }
+    setFilteredRestuarant(json?.data?.cards[2]?.data?.data?.cards);
+  };
 
-    return listOfRestaurents.length === 0 ? <Shimmer /> : (
-        <div className="body">
-            <div className="filter">
-                <div className="search">
-                    <input type="text" className="search-box" value={searchText} onChange={(e) => {
-                       setSearchText(e.target.value); 
-                    }}/>
-                    <button onClick={() => {
-                        // Filter the resturant cards and upadate the UI
-                        // SearchText
-                        console.log(searchText);
+  // Conditional Rendering
+  // if(listOfRestaurents.length === 0) {
+  //     return <Shimmer />;
+  // }
 
-                        const filteredResList = listOfRestaurents.filter((res) => res.data.name.toLowerCase().includes(searchText.toLowerCase()));
-                        
-                        setFilteredRestuarant(filteredResList);
-                        
-                    }}>Search</button>
-                </div>
-                <button className="filter-btn" onClick={ () => {
-                   const filteredList = listOfRestaurents.filter((res) => 
-                    res.data.avgRating > 4
-                   );
-                   setlistOfRestaurents(filteredList);
-                }}
-                >Top Rated Restaurants</button>
-            </div>
-            <div className="res-container">
-            {
-            filteredRestuarant.map((resturants) => (
-                <Link key={resturants.data.id} to={"/restaurants/" + resturants.data.id}>
-                    {<ResturantCard  resData={resturants} />}
-                </Link>
-            ))}
-            </div>
+  return listOfRestaurents.length === 0 ? (
+    <Shimmer />
+  ) : (
+    <div className="body">
+      <div className="filter">
+        <div className="search">
+          <input
+            type="text"
+            className="search-box"
+            value={searchText}
+            onChange={(e) => {
+              setSearchText(e.target.value);
+            }}
+          />
+          <button
+            onClick={() => {
+              // Filter the resturant cards and upadate the UI
+              // SearchText
+              //console.log(searchText);
+
+              const filteredResList = listOfRestaurents.filter((res) =>
+                res.data.name.toLowerCase().includes(searchText.toLowerCase())
+              );
+
+              setFilteredRestuarant(filteredResList);
+            }}
+          >
+            Search
+          </button>
         </div>
-    );
+        <button
+          className="filter-btn"
+          onClick={() => {
+            const filteredList = listOfRestaurents.filter(
+              (res) => res.data.avgRating > 4.0
+            );
+            setlistOfRestaurents(filteredList);
+          }}
+        >
+          Top Rated Restaurants
+        </button>
+      </div>
+      <div className="res-container">
+        {filteredRestuarant.map((resturants) => (
+          <Link
+            key={resturants.data.id}
+            to={"/restaurants/" + resturants.data.id}
+          >
+            {<ResturantCard resData={resturants} />}
+          </Link>
+        ))}
+      </div>
+    </div>
+  );
 };
 
 export default Body;
