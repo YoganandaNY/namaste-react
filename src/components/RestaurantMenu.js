@@ -3,11 +3,15 @@ import Shimmer from "./Shimmer";
 import { useParams } from "react-router-dom";
 import { MENU_API } from "../utils/constant";
 import useRestaurantMenu from "../utils/useRestaurantMenu";
+import { TIME_URL, CURRENCY_URL, LOGO_URL } from "../utils/constant";
+import { Switch } from "@headlessui/react";
 
 const RestaurantMenu = () => {
   // const [resInfo, setResInfo] = useState(null);
 
   const { resId } = useParams();
+
+  const [enabled, setEnabled] = useState(false);
 
   // Custom Hooks
   const resInfo = useRestaurantMenu(resId);
@@ -48,107 +52,92 @@ const RestaurantMenu = () => {
 
   return (
     <>
-      <div className="RestaurantHeader_container">
-        <div className="RestaurantHeader_wrapper">
-          <div className="RestaurantNameAddress_wrapper">
-            <div className="menu">
-              <p className="RestaurantNameAddress_name">{name}</p>
-              <p className="RestaurantNameAddress_cuisines">
-                {cuisines.join(", ")}
-              </p>
-            </div>
-            <div className="RestaurantNameAddress_areaWrapper">
-              <p className="RestaurantNameAddress_area">{areaName}</p>
-              <p className="RestaurantNameAddress_lastMile">
-                {","} {lastMileTravelString}
-              </p>
-            </div>
+      <div className="max-w-3xl mt-5 mx-auto mb-0">
+        <div className="flex mx-3 p-3 justify-between items-center">
+          <div className="">
+            <p className="font-medium">{name}</p>
+            <p className="text-[12px]">{cuisines.join(", ")}</p>
+            <p className="text-[12px]">
+              {areaName} {","} {lastMileTravelString}
+            </p>
           </div>
-          <button className="RestaurantRatings_wrapper">
-            <span className="RestaurantRatings_avgRating">
-              <span className="icon-star"></span>
-              <span>{avgRating}</span>
-            </span>
-            <span className="RestaurantRatings_totalRatings">
-              {totalRatingsString}
-            </span>
-          </button>
+          <div className="p-1 m-1 border border-b-2">
+            <p className="pl-5 border-b text-[14px] font-medium text-green-600">
+              {avgRating}
+            </p>
+            <p className="text-xs pb-1">{totalRatingsString}</p>
+          </div>
         </div>
-        <ul>
-          <li className="RestaurantMessage_wrapper__2Mfts">
-            <img
-              src="https://res.cloudinary.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_18,h_18/SurgeAssets/distSurge"
-              alt="DISTANCE_FEE_FOOD_LM"
-              className="RestaurantMessage_icon__1qCvu"
+        <div className="mx-5 border-b"></div>
+        <div className="mx-4 p-2 flex">
+          <span className="flex items-center">
+            <img src={TIME_URL} className="w-5" />
+            <span className="mx-4 font-bold">{slaString}</span>
+            <span>
+              <img className="w-8" src={CURRENCY_URL} />
+            </span>
+            <span className="mx-2 font-bold">{costForTwoMessage}</span>
+          </span>
+        </div>
+
+        <h2 className="m-5 font-bold">Menu</h2>
+        <div className="flex items-center m-5">
+          <span className="pr-3 text-sm font-medium">Veg Only</span>
+          <Switch
+            checked={enabled}
+            onChange={setEnabled}
+            className={`${enabled ? "bg-green-800" : "bg-gray-400"}
+          relative inline-flex h-6 w-12 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus-visible:ring-2  focus-visible:ring-white focus-visible:ring-opacity-75`}
+          >
+            <span
+              aria-hidden="true"
+              className={`${enabled ? "translate-x-5" : "translate-x-0"}
+            pointer-events-none inline-block h-5 w-6 transform rounded-full bg-white shadow-lg ring-0 transition duration-200 ease-in-out`}
             />
-            <span className="RestaurantMessage_text__1k5GF" aria-hidden="true">
-              Based on distance, an additional delivery fee will apply
-            </span>
-            <span className="ScreenReaderOnly_screenReaderOnly___ww-V">
-              Based on distance, an additional delivery fee will apply
-            </span>
-          </li>
-        </ul>
-        <hr className="RestaurantHeader_dottedSeparator__2O2hU RestaurantHeader_marginBottom__1rbfK"></hr>
-        <div className="RestaurantHeader_marginBottom__1rbfK">
-          <ul className="RestaurantTimeCost_wrapper__3YXF9">
-            <li className="RestaurantTimeCost_item__2HCUz">
-              <svg
-                className="RestaurantTimeCost_icon__8UdT4"
-                width="18"
-                height="18"
-                viewBox="0 0 18 18"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-              >
-                <circle
-                  r="8.35"
-                  transform="matrix(-1 0 0 1 9 9)"
-                  stroke="#3E4152"
-                  strokeWidth="1.3"
-                ></circle>
-                <path
-                  d="M3 15.2569C4.58666 16.9484 6.81075 18 9.273 18C14.0928 18 18 13.9706 18 9C18 4.02944 14.0928 0 9.273 0C9.273 2.25 9.273 9 9.273 9C6.36399 12 5.63674 12.75 3 15.2569Z"
-                  fill="#3E4152"
-                ></path>
-              </svg>
-              <span>{slaString}</span>
-            </li>
-            <li className="RestaurantTimeCost_item__2HCUz">
-              <svg
-                className="RestaurantTimeCost_icon__8UdT4"
-                width="18"
-                height="18"
-                viewBox="0 0 18 18"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-              >
-                <circle
-                  cx="9"
-                  cy="9"
-                  r="8.25"
-                  stroke="#3E4152"
-                  strokeWidth="1.5"
-                ></circle>
-                <path
-                  d="M12.8748 4.495H5.6748V6.04H7.9698C8.7948 6.04 9.4248 6.43 9.6198 7.12H5.6748V8.125H9.6048C9.3798 8.8 8.7648 9.22 7.9698 9.22H5.6748V10.765H7.3098L9.5298 14.5H11.5548L9.1098 10.57C10.2048 10.39 11.2698 9.58 11.4498 8.125H12.8748V7.12H11.4348C11.3148 6.475 10.9698 5.905 10.4298 5.5H12.8748V4.495Z"
-                  fill="#3E4152"
-                ></path>
-              </svg>
-              <span>{costForTwoMessage}</span>
-            </li>
-          </ul>
+          </Switch>
         </div>
-      </div>
-      <h2>Menu</h2>
-      <ul>
+        <div className="mx-5 border-b"></div>
+        <div className="my-4 px-5 ">
+          <div className="">
+            <p className="font-bold">Recommended(18)</p>
+            <ul className="">
+              {itemCards.map((item) => (
+                <li key={item.card.info.id} className="">
+                  <div className="flex justify-between items-center">
+                    <div className="">
+                      <p className="font-medium">{item.card.info.name}</p>
+                      <p className="flex">
+                        <span>
+                          <img className="w-8" src={CURRENCY_URL} />
+                        </span>
+                        {item.card.info.price / 100 ||
+                          item.card.info.defaultPrice / 100}
+                      </p>
+                    </div>
+                    <div>
+                      <span className="">
+                        <img
+                          className="w-[160px] m-4 p-4"
+                          src={LOGO_URL + item.card.info.imageId}
+                        />
+                      </span>
+                    </div>
+                  </div>
+                  <div className="border-b"></div>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+        {/* <ul className="mx-5">
         {itemCards.map((item) => (
           <li key={item.card.info.id}>
             {item.card.info.name} - {" Rs."}
             {item.card.info.price / 100 || item.card.info.defaultPrice / 100}
           </li>
         ))}
-      </ul>
+      </ul> */}
+      </div>
     </>
   );
 };
