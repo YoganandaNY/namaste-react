@@ -1,11 +1,14 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { CDN_URL } from "../utils/constant";
 import { Link } from "react-router-dom";
 import useOnlineStatus from "../utils/useOnlineStatus";
+import UserContext from "../utils/UserContext";
 
 const Header = () => {
   //let btnName = "Login";
   const [btnReactName, setBtnReactName] = useState("Login");
+
+  const { loggedInUser } = useContext(UserContext);
 
   //console.log("Header Rendered");
 
@@ -50,9 +53,9 @@ const Header = () => {
                 : setBtnReactName("Login");
             }}
           >
-            {" "}
-            {btnReactName}{" "}
+            {btnReactName}
           </button>
+          <li className="px-2 m-3 font-bold">{loggedInUser}</li>
         </ul>
       </div>
     </div>

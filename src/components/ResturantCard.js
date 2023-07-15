@@ -1,7 +1,10 @@
+import { useContext } from "react";
 import { LOGO_URL } from "../utils/constant";
+import UserContext from "../utils/UserContext";
 
 const ResturantCard = (props) => {
   const { resData } = props;
+
   const {
     cloudinaryImageId,
     name,
@@ -10,6 +13,9 @@ const ResturantCard = (props) => {
     costForTwo,
     deliveryTime,
   } = resData?.data;
+
+  const { loggedInUser } = useContext(UserContext);
+
   return (
     <div
       className="m-4 p-4 w-[270px] hover:border border-inherit"
@@ -34,6 +40,9 @@ const ResturantCard = (props) => {
           •<span className="m-1 px-1">₹{costForTwo / 100} FOR TWO</span>
         </div>
       </div>
+      <div className="m-1 px-1 text-[12px] font-bold">
+        User : {loggedInUser}
+      </div>
 
       {/* <h3>{name}</h3>
            <p>{cuisines.join(", ")}</p>
@@ -42,6 +51,23 @@ const ResturantCard = (props) => {
            <p>{deliveryTime} MINS</p> */}
     </div>
   );
+};
+
+// Higher Order Components
+
+// input - RestaurantCard => RestaurantCarPromoted
+
+export const withPromotedLabel = (ResturantCard) => {
+  return (props) => {
+    return (
+      <>
+        <label className="absolute bg-black text-white text-xs my-12 p-1 ml-8 rounded">
+          PROMOTED
+        </label>
+        <ResturantCard {...props} />
+      </>
+    );
+  };
 };
 
 export default ResturantCard;

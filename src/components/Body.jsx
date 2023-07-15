@@ -1,10 +1,11 @@
-import ResturantCard from "./ResturantCard";
+import ResturantCard, { withPromotedLabel } from "./ResturantCard";
 import resList from "../utils/mockData";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import Shimmer from "./Shimmer";
 import { Link } from "react-router-dom";
 import { LIST_API } from "../utils/constant";
 import useOnlineStatus from "../utils/useOnlineStatus";
+import UserContext from "../utils/UserContext";
 
 // let listOfRestaurents = [
 //     {
@@ -51,6 +52,10 @@ const Body = () => {
   const [filteredRestuarant, setFilteredRestuarant] = useState([]);
 
   const [searchText, setSearchText] = useState("");
+
+  const ResturantCardPromoted = withPromotedLabel(ResturantCard);
+
+  const { loggedInUser, setUserName } = useContext(UserContext);
 
   //console.log("Body Rendered");
 
@@ -131,6 +136,16 @@ const Body = () => {
         >
           Top Rated Restaurants
         </button>
+        <div>
+          <label>UserName : </label>
+          <input
+            className="px-4 m-4 border border-black rounded-md"
+            value={loggedInUser}
+            onChange={(e) => {
+              setUserName(e.target.value);
+            }}
+          />
+        </div>
       </div>
       <div className="flex flex-wrap">
         {filteredRestuarant.map((resturants) => (
@@ -138,7 +153,11 @@ const Body = () => {
             key={resturants.data.id}
             to={"/restaurants/" + resturants.data.id}
           >
-            {<ResturantCard resData={resturants} />}
+            {resturants.data.promoted ? (
+              <ResturantCardPromoted resData={resturants} />
+            ) : (
+              <ResturantCard resData={resturants} />
+            )}
           </Link>
         ))}
       </div>

@@ -98,3 +98,16 @@
     - On Demand Loading
     - Dynamic import
 
+# Higher Order Components
+
+    - We have take component and return the component
+    - Parent Component controlled by own state inside it is called Controlled component
+    - Parent Component controlled by child component state is called Uncontrolled Component
+
+# Props Drilling
+
+- Nested Child component get some data from parent we use props from all nested components is called Props Drilling.
+
+- Parent Component controlled by the all child component states is called Lifting Up the State.
+
+- UseContext is tool for used to get Authenticate user from all over application
