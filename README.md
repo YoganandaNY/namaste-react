@@ -111,3 +111,12 @@
 - Parent Component controlled by the all child component states is called Lifting Up the State.
 
 - UseContext is tool for used to get Authenticate user from all over application
+
+# Redux Toolkit
+
+- Install @reduxjs/toolkit and react-redux
+- Build our store
+- Connect our store to app
+- Slice (Create cartSlice)
+- Dispatch(action)
+- Selector

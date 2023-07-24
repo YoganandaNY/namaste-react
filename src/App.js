@@ -8,6 +8,9 @@ import Error from "./components/Error";
 import RestaurantMenu from "./components/RestaurantMenu";
 import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
 import UserContext from "./utils/UserContext";
+import { Provider } from "react-redux";
+import appStore from "./utils/appStore";
+import Cart from "./components/Cart";
 //import Grocery from "./components/Grocery";
 
 /** Optimizing Our App */
@@ -34,17 +37,18 @@ const AppLayout = () => {
 
   return (
     //Ravishankar
-
-    <div className="app">
-      {/* Ravishankar All Over App*/}
-      <UserContext.Provider value={{ loggedInUser: userName, setUserName }}>
-        {/* Yogananda Only in Header*/}
-        <UserContext.Provider value={{ loggedInUser: "Yogananda" }}>
-          <Header />
+    <Provider store={appStore}>
+      <div className="app">
+        {/* Ravishankar All Over App*/}
+        <UserContext.Provider value={{ loggedInUser: userName, setUserName }}>
+          {/* Yogananda Only in Header*/}
+          <UserContext.Provider value={{ loggedInUser: "Yogananda" }}>
+            <Header />
+          </UserContext.Provider>
+          <Outlet />
         </UserContext.Provider>
-        <Outlet />
-      </UserContext.Provider>
-    </div>
+      </div>
+    </Provider>
   );
 };
 
@@ -80,6 +84,10 @@ const appRouter = createBrowserRouter([
       {
         path: "/restaurants/:resId",
         element: <RestaurantMenu />,
+      },
+      {
+        path: "/cart",
+        element: <Cart />,
       },
     ],
     errorElement: <Error />,

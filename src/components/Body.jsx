@@ -137,9 +137,11 @@ const Body = () => {
           Top Rated Restaurants
         </button>
         <div>
-          <label>UserName : </label>
+          <label>UserName :
+            
+          </label>
           <input
-            className="px-4 m-4 border border-black rounded-md"
+            className="px-2 m-4 border border-black rounded-md"
             value={loggedInUser}
             onChange={(e) => {
               setUserName(e.target.value);
